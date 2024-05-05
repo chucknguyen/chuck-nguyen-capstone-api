@@ -4,6 +4,7 @@ export const up = function (knex) {
       table
         .integer('user_id')
         .unsigned();
+      table.foreign('user_id').references('user.id').onUpdate('CASCADE').onDelete('CASCADE');
       table.string('item_name').notNullable();
       table.integer('quantity').notNullable();
       table.integer('price').notNullable();
@@ -11,7 +12,6 @@ export const up = function (knex) {
       table.json('media'); 
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-      table.foreign('user_id').references('user.id').onUpdate('CASCADE').onDelete('CASCADE');
     });
   };
   export const down = function (knex) {

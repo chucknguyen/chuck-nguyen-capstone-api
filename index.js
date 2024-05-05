@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import inventory from './routes/inventory.js'
+import cart from './routes/cart.js'
 const app = express();
 import "dotenv/config"
 
@@ -13,6 +14,7 @@ app.route("/")
   .get((req, res) => {res.status(200).json("Works!")})
 
 app.use('/inventory', inventory);
+app.use('/cart', cart);
 
 app.listen(PORT || 5050, () => {
     console.log(`running on ${PORT || 5050}`);
