@@ -10,6 +10,9 @@ export const up = function (knex) {
       table.integer('price').notNullable();
       table.string('description').notNullable();
       table.json('media'); 
+      table.string('brand');
+      table.string('type');
+      table.string('category');
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
     });

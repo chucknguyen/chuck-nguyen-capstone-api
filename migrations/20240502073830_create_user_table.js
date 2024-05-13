@@ -5,7 +5,6 @@ export const up = function (knex) {
       table.string('password').notNullable();
       table.string('email').notNullable();
       table.string('name').notNullable();
-      table.boolean('is_seller').defaultTo(false);
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
     });

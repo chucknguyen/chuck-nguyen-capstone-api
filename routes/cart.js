@@ -4,6 +4,13 @@ import knex from 'knex';
 import knexfile from '../knexfile.js';
 const myknex = knex(knexfile);
 
+const getToken = (req) => {
+    if(!req.headers.authorization){
+      return;
+    } else {
+      return req.headers.authorization.split(" ")[1];
+    }
+  }
 const updateCart = async () => {
     await myknex('cart').insert({user_id:1})}
 router.post('/', async (req,res) => {
