@@ -9,6 +9,21 @@ import bcrypt from 'bcrypt';
 import knex from 'knex';
 import knexfile from './knexfile.js';
 const myknex = knex(knexfile);
+import multer from 'multer';
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/images')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+})
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024,
+  }
+});
 
 const { PORT, CORS_ORIGIN, SECRET_KEY } = process.env;
 app.use(cors({ origin: CORS_ORIGIN })); 
@@ -56,6 +71,21 @@ app.post("/login", async (req, res) => {
     });
   }
 });
+app.post('/upload', upload.array('files', 5), (req, res) => {
+  const files = req.files;
+  if (!files) {
+    return res.status(400).send({error: 'No files were uploaded.'});
+  }
+  const fileUrls = files.map(file => {
+    return {
+      filename: file.filename,
+      url: 'http://localhost:8080/' + file.filename 
+    };
+  });
+  const media = fileUrls.map(file => file.url);
+  res.status(200).json({media});
+});
+
 
 app.listen(PORT || 5050, () => {
     console.log(`running on ${PORT || 5050}`);
