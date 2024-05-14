@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import inventory from './routes/inventory.js'
 import cart from './routes/cart.js'
+import user from './routes/user.js'
 const app = express();
 import "dotenv/config"
 import jwt from 'jsonwebtoken';
@@ -35,6 +36,7 @@ app.route("/")
 
 app.use('/inventory', inventory);
 app.use('/cart', cart);
+app.use('/user', user);
 
 
 
